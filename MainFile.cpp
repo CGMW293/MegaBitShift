@@ -30,7 +30,7 @@ void FindFilesInDirectory(string directory) {
             if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {//makes sure it doesnt recuesivecall the same directory
                 fullPath = directory + "\\" + data.cFileName;
                 if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-                    FindFilesInDirectory(fullPath);
+                    FindFilesInDirectory(fullPath);//we do a bit of recusion
                     //std::cout << "DIRECTORY: " << fullPath << "\n";
                 }
                 else { 
