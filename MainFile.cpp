@@ -27,7 +27,7 @@ void FindFilesInDirectory(string directory) {
     }
     if ((hFind = FindFirstFileA((directory + "\\*").c_str(), &data)) != INVALID_HANDLE_VALUE) {
         do {
-            if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {
+            if (strcmp(data.cFileName, ".") != 0 && strcmp(data.cFileName, "..") != 0) {//makes sure it doesnt recuesivecall the same directory
                 fullPath = directory + "\\" + data.cFileName;
                 if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
                     FindFilesInDirectory(fullPath);
