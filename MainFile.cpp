@@ -1,4 +1,6 @@
-
+//If you decide to make the choice to modify lines 33-38, god bless your soul.
+//WindowsAPI and iostream handle spaces and backslashes differently, the checks 
+// at line 25, 28, 30, and 32 work with the differences in formating.
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -42,7 +44,7 @@ void FindFilesInDirectory(string directory) {
 }
 
 int main() {
-    string root = "C:\\Users\\jaken\\OneDrive\\Desktop\\I am vegeta\\";
+    string root = "C:\\Users\\example\\";//Make this the directory to search for, make sure it ends with a double backslash.
     FindFilesInDirectory(root);
     return 0;
 }
