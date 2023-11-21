@@ -22,7 +22,7 @@ void FindFilesInDirectory(string directory) {
     WIN32_FIND_DATAA data;
     HANDLE hFind;
     string fullPath;
-    if (directory.back() == '\\') {// Remove the bitchass doubebackslash because SOMETHING takes it litterally and the COMPILER takes it as a single
+    if (directory.back() == '\\') {// Remove the nefarious doube backslash because SOMETHING takes it litterally and the COMPILER takes it as a single
         directory.pop_back();
     }
     if ((hFind = FindFirstFileA((directory + "\\*").c_str(), &data)) != INVALID_HANDLE_VALUE) {
